@@ -1,103 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Lern2ern | Sign Up & Sign In</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Font and Font Awesome for Icons -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <style>
-    :root {
-      --primary: #5A67D8;
-      --secondary: #48BB78;
-      --bg: #f3f6fd;
-      --card-bg: #fff;
-      --border-radius: 18px;
-      --box-shadow: 0 8px 32px rgba(60,60,90,0.12);
-    }
+    <meta charset="UTF-8">
+    <title>Lern2ern - Sign In/Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #9be15d 0%, #00e3ae 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px 0 rgba(60, 60, 60, 0.2);
+            overflow: hidden;
+            width: 350px;
+            max-width: 90vw;
+            padding: 32px 28px;
+            text-align: center;
+        }
+        .logo {
+            width: 90px;
+            margin-bottom: 16px;
+            border-radius: 50%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+            background: #fff;
+        }
+        h2 {
+            margin: 0 0 20px 0;
+            color: #222;
+        }
+        .tab-btns {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .tab-btns button {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #888;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-bottom 0.2s;
+        }
+        .tab-btns .active {
+            color: #00ba7c;
+            border-bottom: 2px solid #00ba7c;
+        }
+        form {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+            animation: fadeIn 0.5s;
+        }
+        form.active {
+            display: flex;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #fafafa;
+            transition: border 0.2s;
+        }
+        input:focus {
+            border: 1.5px solid #00ba7c;
+            outline: none;
+        }
+        .submit-btn {
+            background: linear-gradient(90deg, #00ba7c 0%, #42e695 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 2px 8px rgba(0,186,124,0.10);
+        }
+        .submit-btn:hover {
+            background: linear-gradient(90deg, #42e695 0%, #00ba7c 100%);
+            box-shadow: 0 4px 16px rgba(0,186,124,0.13);
+        }
+        .switch-link {
+            margin-top: 12px;
+            color: #00ba7c;
+            cursor: pointer;
+            font-size: 0.96rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px);}
+            to   { opacity: 1; transform: translateY(0);}
+        }
+        @media (max-width: 480px) {
+            .container { padding: 20px 6vw; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="learn2earn.6c57a56b (1)" alt="Lern2ern Logo" />
+        <h2>Welcome to Lern2ern</h2>
+        <div class="tab-btns">
+            <button id="signInTab" class="active">Sign In</button>
+            <button id="signUpTab">Sign Up</button>
+        </div>
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(135deg, var(--primary) 60%, var(--secondary) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .container {
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      width: 380px;
-      padding: 2.5rem 2rem 2rem 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: box-shadow 0.3s;
-    }
-    .container:hover {
-      box-shadow: 0 16px 48px rgba(60,60,90,0.19);
-    }
-    .toggle-btns {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-    .toggle-btns button {
-      background: none;
-      border: none;
-      outline: none;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #888;
-      padding: 0.7rem 2rem;
-      cursor: pointer;
-      transition: color 0.2s, border-bottom 0.2s;
-      border-bottom: 2px solid transparent;
-    }
-    .toggle-btns button.active {
-      color: var(--primary);
-      border-bottom: 2px solid var(--primary);
-    }
-    form {
-      display: none;
-      flex-direction: column;
-      gap: 1.2rem;
-      animation: fadeIn 0.4s;
-    }
-    form.active { display: flex; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(40px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .form-group {
-      position: relative;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 0.9rem 2.5rem 0.9rem 1rem;
-      border: 1.5px solid #e3e8f0;
-      border-radius: 10px;
-      outline: none;
-      font-size: 1rem;
-      background: #f9fafc;
-      transition: border 0.2s;
-    }
-    .form-group input:focus {
-      border: 1.5px solid var(--primary);
-    }
-    .form-group .fa {
-      position: absolute;
-      top: 50%;
-      right: 1rem;
-      transform: translateY(-50%);
-      color: #bbb;
-      font-size: 1.05rem;
-    }
-    .submit-btn {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: #fff;
-      font-weight: 700;
-      padding*
-
+        <form id="signInForm" class="active" autocomplete="on">
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <button class="submit-btn" type="submit">Sign In</button>
+        </form>
+
+        <form id="signUpForm">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <input type="password" placeholder="Confirm Password" required>
+            <button class="submit-btn" type="submit">Sign Up</button>
+        </form>
+    </div>
+    <script>
+        // Tab switching
+        const signInTab = document.getElementById('signInTab');
+        const signUpTab = document.getElementById('signUpTab');
+        const signInForm = document.getElementById('signInForm');
+        const signUpForm = document.getElementById('signUpForm');
+
+        signInTab.onclick = () => {
+            signInTab.classList.add('active');
+            signUpTab.classList.remove('active');
+            signInForm.classList.add('active');
+            signUpForm.classList.remove('active');
+        };
+
+        signUpTab.onclick = () => {
+            signUpTab.classList.add('active');
+            signInTab.classList.remove('active');
+            signUpForm.classList.add('active');
+            signInForm.classList.remove('active');
+        };
+
+        // Demo form handlers
+        signInForm.onsubmit = function(e) {
+            e.preventDefault();
+            alert('Sign In attempted. Backend integration needed.');
+        };
+        signUpForm.onsubmit = function(e) {
+            e.preventDefault();
+            if (signUpForm.elements[2].value !== signUpForm.elements[3].value) {
+                alert('Passwords do not match!');
+                return;
+            }
+            alert('Sign Up attempted. Backend integration needed.');
+        };
+    </script>
+</body>
+</html>
