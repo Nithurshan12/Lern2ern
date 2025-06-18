@@ -2,133 +2,301 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lern2ern - Sign In/Up</title>
+    <title>Lern2ern – Sign In/Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #00ba7c;
+            --primary-alt: #42e695;
+            --error: #e74c3c;
+            --bg: #fff;
+            --fg: #222;
+            --input-bg: #fafafa;
+            --shadow: 0 8px 40px 0 rgba(60, 60, 60, 0.2);
+            --container-w: 380px;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #111;
+                --fg: #f7f7f7;
+                --input-bg: #232323;
+            }
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
         body {
-            background: linear-gradient(135deg, #9be15d 0%, #00e3ae 100%);
             min-height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #9be15d 0%, #00e3ae 100%);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--fg);
+            transition: background 0.3s;
         }
         .container {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 40px 0 rgba(60, 60, 60, 0.2);
-            overflow: hidden;
-            width: 350px;
-            max-width: 90vw;
-            padding: 32px 28px;
+            background: var(--bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: var(--container-w);
+            max-width: 94vw;
+            padding: 40px 32px 32px 32px;
             text-align: center;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
         }
-        .logo {
+        .logo-anim {
             width: 90px;
-            margin-bottom: 16px;
-            border-radius: 50%;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-            background: #fff;
+            height: 90px;
+            margin-bottom: 18px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         h2 {
-            margin: 0 0 20px 0;
-            color: #222;
+            margin: 0 0 22px 0;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--fg);
         }
         .tab-btns {
             display: flex;
             justify-content: center;
-            margin-bottom: 24px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            .tab-btns {
+                background: #1c1c1c;
+            }
         }
         .tab-btns button {
             flex: 1;
-            padding: 10px 0;
+            padding: 13px 0;
             border: none;
             background: none;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             color: #888;
-            border-bottom: 2px solid transparent;
+            border-bottom: 2.5px solid transparent;
             transition: color 0.2s, border-bottom 0.2s;
+            outline: none;
+            background: transparent;
         }
         .tab-btns .active {
-            color: #00ba7c;
-            border-bottom: 2px solid #00ba7c;
+            color: var(--primary);
+            border-bottom: 2.5px solid var(--primary);
+            background: rgba(0,186,124,0.07);
         }
         form {
             display: none;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
             animation: fadeIn 0.5s;
         }
         form.active {
             display: flex;
         }
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
         input[type="text"], input[type="email"], input[type="password"] {
-            padding: 12px;
-            border: 1px solid #e0e0e0;
+            flex: 1;
+            padding: 13px 14px;
+            border: 1.5px solid #e0e0e0;
             border-radius: 8px;
             font-size: 1rem;
-            background: #fafafa;
-            transition: border 0.2s;
+            background: var(--input-bg);
+            color: var(--fg);
+            transition: border 0.2s, background 0.3s, color 0.3s;
         }
         input:focus {
-            border: 1.5px solid #00ba7c;
+            border: 1.5px solid var(--primary);
             outline: none;
         }
+        .toggle-pw {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            padding: 0 8px;
+            font-size: 1.1em;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .error-msg {
+            color: var(--error);
+            font-size: 0.93rem;
+            margin-top: -8px;
+            margin-bottom: 4px;
+            min-height: 18px;
+        }
         .submit-btn {
-            background: linear-gradient(90deg, #00ba7c 0%, #42e695 100%);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-alt) 100%);
             color: #fff;
             border: none;
             border-radius: 8px;
-            padding: 12px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 13px 0;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: box-shadow 0.2s, background 0.2s;
             box-shadow: 0 2px 8px rgba(0,186,124,0.10);
+            margin-top: 6px;
         }
-        .submit-btn:hover {
-            background: linear-gradient(90deg, #42e695 0%, #00ba7c 100%);
-            box-shadow: 0 4px 16px rgba(0,186,124,0.13);
+        .submit-btn:active {
+            background: linear-gradient(90deg, var(--primary-alt) 0%, var(--primary) 100%);
         }
-        .switch-link {
-            margin-top: 12px;
-            color: #00ba7c;
+        .social-login {
+            margin: 18px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 11px 0;
+            border-radius: 7px;
+            border: 1px solid #e0e0e0;
+            background: #f9f9f9;
+            color: #222;
+            font-size: 0.98rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 0.96rem;
+            transition: background 0.15s;
         }
+        .social-btn:active {
+            background: #e6e6e6;
+        }
+        @media (prefers-color-scheme: dark) {
+            .social-btn {
+                background: #181818;
+                color: #e7e7e7;
+                border: 1px solid #262626;
+            }
+            .social-btn:active {
+                background: #232323;
+            }
+        }
+        .pw-strength {
+            height: 7px;
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: -8px;
+            margin-bottom: 2px;
+        }
+        .pw-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--error);
+            transition: width 0.3s, background 0.3s;
+            border-radius: 6px;
+        }
+        .pw-bar.medium { background: #f5a623; }
+        .pw-bar.strong { background: var(--primary); }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(16px);}
             to   { opacity: 1; transform: translateY(0);}
         }
         @media (max-width: 480px) {
-            .container { padding: 20px 6vw; }
+            .container { padding: 16px 3vw; }
+            .logo-anim { width: 70px; height: 70px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-    <img src="path/to/Screenshot 2025-06-18 10.00.12 AM.png>
+    <div class="container" aria-label="Authentication container">
+        <!-- Animated SVG Logo -->
+        <svg class="logo-anim" viewBox="0 0 90 90" fill="none">
+            <circle cx="45" cy="45" r="42" fill="#00ba7c" fill-opacity="0.13" />
+            <circle cx="45" cy="45" r="32" fill="#00e3ae" fill-opacity="0.19" />
+            <path d="M30 50 Q45 15 60 50" stroke="#00ba7c" stroke-width="5" fill="none">
+                <animate attributeName="d" values="
+                    M30 50 Q45 15 60 50;
+                    M32 48 Q45 10 58 48;
+                    M30 50 Q45 15 60 50
+                " dur="2.2s" repeatCount="indefinite"/>
+            </path>
+            <circle cx="45" cy="45" r="18" fill="#fff"/>
+            <text x="45" y="52" text-anchor="middle" font-size="2.3em" font-family="Inter, sans-serif" fill="#00ba7c" font-weight="bold">L2E</text>
+        </svg>
         <h2>Welcome to Lern2ern</h2>
-        <div class="tab-btns">
-            <button id="signInTab" class="active">Sign In</button>
-            <button id="signUpTab">Sign Up</button>
+        <div class="tab-btns" role="tablist">
+            <button id="signInTab" class="active" role="tab" aria-selected="true" tabindex="0">Sign In</button>
+            <button id="signUpTab" role="tab" aria-selected="false" tabindex="0">Sign Up</button>
         </div>
-
-        <form id="signInForm" class="active" autocomplete="on">
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
+        <!-- SIGN IN FORM -->
+        <form id="signInForm" class="active" aria-label="Sign In form" autocomplete="on">
+            <div class="input-group">
+                <input type="email" name="signin-email" placeholder="Email" required aria-label="Email">
+            </div>
+            <div class="input-group">
+                <input type="password" name="signin-password" placeholder="Password" required aria-label="Password" autocomplete="current-password">
+                <button type="button" class="toggle-pw" tabindex="-1" aria-label="Show/Hide Password" onclick="togglePassword(this, 'signin-password')">&#128065;</button>
+            </div>
+            <div class="error-msg" id="signInError"></div>
             <button class="submit-btn" type="submit">Sign In</button>
+            <div class="social-login">
+                <button type="button" class="social-btn" aria-label="Sign in with Google">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="" width="20" height="20" style="vertical-align:middle;">
+                    Sign in with Google
+                </button>
+                <button type="button" class="social-btn" aria-label="Sign in with GitHub">
+                    <img src="https://www.svgrepo.com/show/452211/github-142.svg" alt="" width="20" height="20" style="vertical-align:middle;">
+                    Sign in with GitHub
+                </button>
+            </div>
         </form>
-
-        <form id="signUpForm">
-            <input type="text" placeholder="Full Name" required>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <input type="password" placeholder="Confirm Password" required>
+        <!-- SIGN UP FORM -->
+        <form id="signUpForm" aria-label="Sign Up form" autocomplete="on">
+            <div class="input-group">
+                <input type="text" name="signup-fullname" placeholder="Full Name" required aria-label="Full Name" autocomplete="name">
+            </div>
+            <div class="input-group">
+                <input type="email" name="signup-email" placeholder="Email" required aria-label="Email" autocomplete="email">
+            </div>
+            <div class="input-group">
+                <input type="password" name="signup-password" id="signup-password" placeholder="Password" required aria-label="Password" autocomplete="new-password">
+                <button type="button" class="toggle-pw" tabindex="-1" aria-label="Show/Hide Password" onclick="togglePassword(this, 'signup-password')">&#128065;</button>
+            </div>
+            <div class="pw-strength"><div class="pw-bar" id="pwBar"></div></div>
+            <div class="input-group">
+                <input type="password" name="signup-confirm" id="signup-confirm" placeholder="Confirm Password" required aria-label="Confirm Password" autocomplete="new-password">
+                <button type="button" class="toggle-pw" tabindex="-1" aria-label="Show/Hide Password" onclick="togglePassword(this, 'signup-confirm')">&#128065;</button>
+            </div>
+            <div class="error-msg" id="signUpError"></div>
             <button class="submit-btn" type="submit">Sign Up</button>
+            <div class="social-login">
+                <button type="button" class="social-btn" aria-label="Sign up with Google">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="" width="20" height="20" style="vertical-align:middle;">
+                    Sign up with Google
+                </button>
+                <button type="button" class="social-btn" aria-label="Sign up with GitHub">
+                    <img src="https://www.svgrepo.com/show/452211/github-142.svg" alt="" width="20" height="20" style="vertical-align:middle;">
+                    Sign up with GitHub
+                </button>
+            </div>
         </form>
     </div>
     <script>
@@ -137,33 +305,114 @@
         const signUpTab = document.getElementById('signUpTab');
         const signInForm = document.getElementById('signInForm');
         const signUpForm = document.getElementById('signUpForm');
-
         signInTab.onclick = () => {
             signInTab.classList.add('active');
             signUpTab.classList.remove('active');
+            signInTab.setAttribute("aria-selected","true");
+            signUpTab.setAttribute("aria-selected","false");
             signInForm.classList.add('active');
             signUpForm.classList.remove('active');
         };
-
         signUpTab.onclick = () => {
             signUpTab.classList.add('active');
             signInTab.classList.remove('active');
+            signUpTab.setAttribute("aria-selected","true");
+            signInTab.setAttribute("aria-selected","false");
             signUpForm.classList.add('active');
             signInForm.classList.remove('active');
         };
-
-        // Demo form handlers
+        // Password strength checker
+        const pwInput = document.getElementById('signup-password');
+        const pwBar = document.getElementById('pwBar');
+        if (pwInput && pwBar) {
+            pwInput.addEventListener('input', function () {
+                const val = pwInput.value;
+                let score = 0;
+                if (val.length >= 8) score++;
+                if (/[A-Z]/.test(val)) score++;
+                if (/[0-9]/.test(val)) score++;
+                if (/[^A-Za-z0-9]/.test(val)) score++;
+                if (score === 0) {
+                    pwBar.style.width = "0%";
+                    pwBar.className = "pw-bar";
+                } else if (score === 1) {
+                    pwBar.style.width = "33%";
+                    pwBar.className = "pw-bar";
+                } else if (score === 2) {
+                    pwBar.style.width = "66%";
+                    pwBar.className = "pw-bar medium";
+                } else if (score >= 3) {
+                    pwBar.style.width = "100%";
+                    pwBar.className = "pw-bar strong";
+                }
+            });
+        }
+        // Password show/hide
+        function togglePassword(btn, inputId) {
+            const pwInput = document.getElementById(inputId);
+            if (!pwInput) return;
+            if (pwInput.type === "password") {
+                pwInput.type = "text";
+                btn.innerHTML = "&#128064;";
+            } else {
+                pwInput.type = "password";
+                btn.innerHTML = "&#128065;";
+            }
+        }
+        // Validation helpers
+        function showError(form, msg) {
+            if (form === signInForm) {
+                document.getElementById('signInError').textContent = msg;
+            } else if (form === signUpForm) {
+                document.getElementById('signUpError').textContent = msg;
+            }
+        }
+        function clearError(form) {
+            showError(form, "");
+        }
+        // Sign In form handler
         signInForm.onsubmit = function(e) {
             e.preventDefault();
-            alert('Sign In attempted. Backend integration needed.');
-        };
-        signUpForm.onsubmit = function(e) {
-            e.preventDefault();
-            if (signUpForm.elements[2].value !== signUpForm.elements[3].value) {
-                alert('Passwords do not match!');
+            clearError(signInForm);
+            const email = signInForm.elements['signin-email'].value.trim();
+            const password = signInForm.elements['signin-password'].value;
+            if (!email || !password) {
+                showError(signInForm, "Please fill in all fields.");
                 return;
             }
-            alert('Sign Up attempted. Backend integration needed.');
+            // Simulate async
+            setTimeout(() => {
+                showError(signInForm, "Sign In attempted. Backend integration needed.");
+            }, 500);
+        };
+        // Sign Up form handler
+        signUpForm.onsubmit = function(e) {
+            e.preventDefault();
+            clearError(signUpForm);
+            const name = signUpForm.elements['signup-fullname'].value.trim();
+            const email = signUpForm.elements['signup-email'].value.trim();
+            const password = signUpForm.elements['signup-password'].value;
+            const confirm = signUpForm.elements['signup-confirm'].value;
+            if (!name || !email || !password || !confirm) {
+                showError(signUpForm, "All fields are required.");
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError(signUpForm, "Please enter a valid email address.");
+                return;
+            }
+            if (password !== confirm) {
+                showError(signUpForm, "Passwords do not match!");
+                return;
+            }
+            if (password.length < 8) {
+                showError(signUpForm, "Password must be at least 8 characters.");
+                return;
+            }
+            // Simulate async
+            setTimeout(() => {
+                showError(signUpForm, "Sign Up attempted. Backend integration needed.");
+            }, 500);
         };
     </script>
 </body>
