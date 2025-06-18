@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lern2ern | Sign Up & Sign In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Font and Font Awesome for Icons -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #5A67D8;
+      --secondary: #48BB78;
+      --bg: #f3f6fd;
+      --card-bg: #fff;
+      --border-radius: 18px;
+      --box-shadow: 0 8px 32px rgba(60,60,90,0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary) 60%, var(--secondary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 380px;
+      padding: 2.5rem 2rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .container:hover {
+      box-shadow: 0 16px 48px rgba(60,60,90,0.19);
+    }
+    .toggle-btns {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .toggle-btns button {
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #888;
+      padding: 0.7rem 2rem;
+      cursor: pointer;
+      transition: color 0.2s, border-bottom 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .toggle-btns button.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+    form {
+      display: none;
+      flex-direction: column;
+      gap: 1.2rem;
+      animation: fadeIn 0.4s;
+    }
+    form.active { display: flex; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .form-group {
+      position: relative;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.9rem 2.5rem 0.9rem 1rem;
+      border: 1.5px solid #e3e8f0;
+      border-radius: 10px;
+      outline: none;
+      font-size: 1rem;
+      background: #f9fafc;
+      transition: border 0.2s;
+    }
+    .form-group input:focus {
+      border: 1.5px solid var(--primary);
+    }
+    .form-group .fa {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
+      color: #bbb;
+      font-size: 1.05rem;
+    }
+    .submit-btn {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-weight: 700;
+      padding*
+
