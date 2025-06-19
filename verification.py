@@ -10,8 +10,16 @@ Description: Highly modular and extensible verification system supporting:
 - Internationalization
 - Security best practices
 """
+gcc -shared -o libcheck_user.so -fPIC check_user.c
+import ctypes
 
-import os
+lib = ctypes.CDLL('./libcheck_user.so')
+lib.check_user.argtypes = [ctypes.c_char_p, ctypes.c_char_p]
+lib.check_user.restype = ctypes.c_int
+
+def sign_in(username, password):
+    result = lib.check_user(username.encode(), password.encode())
+    return result == 1import os
 import re
 import time
 import random
